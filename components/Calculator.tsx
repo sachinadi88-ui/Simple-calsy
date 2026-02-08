@@ -100,20 +100,23 @@ export const Calculator: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-8 items-center justify-center w-full px-4 max-w-md mx-auto">
-      {/* Calculator Main Body */}
-      <div className="w-full bg-white/40 backdrop-blur-2xl border border-white/60 rounded-[40px] shadow-2xl p-6 md:p-8 flex flex-col gap-6">
+      {/* Calculator Main Body - Enhanced Glass */}
+      <div className="w-full bg-white/40 backdrop-blur-[32px] border border-white/70 rounded-[48px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.1)] p-6 md:p-8 flex flex-col gap-6 relative overflow-hidden">
+        {/* Decorative inner light for container */}
+        <div className="absolute -top-24 -left-24 w-48 h-48 bg-white/20 blur-3xl rounded-full"></div>
+
         {/* Display Area */}
-        <div className="flex flex-col items-end justify-center min-h-[100px] px-4">
-          <div className="text-slate-400 text-lg font-medium h-6 overflow-hidden">
+        <div className="flex flex-col items-end justify-center min-h-[120px] px-4 relative z-10">
+          <div className="text-slate-500 text-sm font-bold tracking-wider uppercase opacity-60 h-6 overflow-hidden">
             {state.previousValue} {state.operator}
           </div>
-          <div className="text-slate-900 text-6xl md:text-7xl font-light tracking-tight truncate w-full text-right">
+          <div className="text-slate-900 text-6xl md:text-7xl font-extralight tracking-tighter truncate w-full text-right drop-shadow-sm">
             {state.display}
           </div>
         </div>
 
         {/* Buttons Grid */}
-        <div className="grid grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-4 gap-4 relative z-10">
           <Button label="AC" onClick={clear} variant="action" />
           <Button label="+/-" onClick={toggleSign} variant="action" />
           <Button label="%" onClick={handlePercent} variant="action" />
@@ -140,13 +143,13 @@ export const Calculator: React.FC = () => {
         </div>
       </div>
 
-      {/* History Snippet - Moved below calculator */}
+      {/* History Snippet - Glassy Footer */}
       {state.history.length > 0 && (
-        <div className="w-full bg-white/20 backdrop-blur-lg border border-white/40 rounded-[30px] p-6 shadow-lg animate-fadeIn">
-          <h4 className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-3 text-center">Recent Calculations</h4>
-          <div className="flex flex-col gap-2">
+        <div className="w-full bg-white/30 backdrop-blur-xl border border-white/50 rounded-[32px] p-6 shadow-xl animate-fadeIn">
+          <h4 className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-center opacity-70">Calculations Journal</h4>
+          <div className="flex flex-col gap-3">
             {state.history.map((item, i) => (
-              <div key={i} className="text-slate-600 text-sm text-center font-medium border-b border-slate-200/50 pb-1 last:border-0">
+              <div key={i} className="text-slate-700 text-sm text-center font-semibold bg-white/10 rounded-xl py-2 border border-white/20">
                 {item}
               </div>
             ))}
@@ -157,7 +160,6 @@ export const Calculator: React.FC = () => {
   );
 };
 
-// Simple animation for new results
 const style = document.createElement('style');
 style.innerHTML = `
 @keyframes fadeIn {
@@ -165,7 +167,7 @@ style.innerHTML = `
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 `;
 document.head.appendChild(style);
